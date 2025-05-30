@@ -4,6 +4,12 @@ const port = 3000; // Your NGINX will proxy to this
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log('Received:', req.method, req.url);
+  next();
+});
+
+
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from backend!' });
 });
