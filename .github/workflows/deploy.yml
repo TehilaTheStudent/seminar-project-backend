@@ -22,7 +22,7 @@ jobs:
         source: "."  # everything
         target: "/home/ubuntu/seminar-project-backend"
 
-    - name: Install & Restart Backend
+    - name: Install dependencies & restart service
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.EC2_HOST }}
@@ -31,5 +31,6 @@ jobs:
         script: |
           cd /home/ubuntu/seminar-project-backend
           npm install
-          pkill node || true
-          nohup npm start > out.log 2>&1 &
+          sudo systemctl daemon-reload
+          sudo systemctl restart myapp.service
+          sudo systemctl status myapp.service --no-pager
